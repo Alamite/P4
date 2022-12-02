@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="style(o).xsl"?>
+<!DOCTYPE orders [
+<!ELEMENT order (orderid,author,from,to)>
+<!ELEMENT orderid (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT from (#PCDATA)>
+<!ELEMENT to (#PCDATA)>
+]>
+
+<Honda>
+                <model>CB300r</model>
+                <type>neo cafe racer</type>
+                <capacity>300cc</capacity>
+                <release>2001</release>
+</Honda>

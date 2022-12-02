@@ -1,11 +1,11 @@
 <!DOCTYPE html>  
 <html>  
 <body>  
-<h1>DOM PARSER</h1>  
+<h1>HONDA</h1>  
 <div>  
-<b>To:</b> <span id="to"></span><br>  
-<b>From:</b> <span id="from"></span><br>  
-<b>Message:</b> <span id="message"></span>  
+<b>Model:</b> <span id="MODEL"></span><br>  
+<b>Type:</b> <span id="TYPE"></span><br>  
+<b>Capacity:</b> <span id="CAPACITY"></span>  
 </div>  
 <script>  
 if (window.XMLHttpRequest)  
@@ -13,18 +13,79 @@ if (window.XMLHttpRequest)
   xmlhttp=new XMLHttpRequest();  
   }  
 else  
-  {// code for IE6, IE5  
+  {// code for IE6, IE5
   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");  
   }  
+
+//linking xml file
 xmlhttp.open("GET","note.xml",false);  
 xmlhttp.send();  
 xmlDoc=xmlhttp.responseXML;  
-document.getElementById("to").innerHTML=  
-xmlDoc.getElementsByTagName("to")[0].childNodes[0].nodeValue; 
-document.getElementById("from").innerHTML=  
-xmlDoc.getElementsByTagName("from")[0].childNodes[0].nodeValue;  
-document.getElementById("message").innerHTML=  
-xmlDoc.getElementsByTagName("body")[0].childNodes[0].nodeValue;  
+
+document.getElementById("MODEL").innerHTML=  
+xmlDoc.getElementsByTagName("model")[0].childNodes[0].nodeValue; 
+document.getElementById("TYPE").innerHTML=  
+xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;  
+document.getElementById("CAPACITY").innerHTML=  
+xmlDoc.getElementsByTagName("capacity")[0].childNodes[0].nodeValue;  
+
+
+//entering values
+var tab="";
+var a=0;
+var b=0;
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      parser = new DOMParser();
+        xmlDoc = parser.parseFromString(this.responseText,"text/xml");
+        for(var a=0;xmlDoc.getElementsByTagName("orderid")[a].childNodes[0].nodeValue!=null;a++)
+        {
+            b++;
+            document.getElementById("demo").innerHTML +="<tr id=row"+a+"></td><td><input type='number' value="+xmlDoc.getElementsByTagName("orderid")[a].childNodes[0].nodeValue+"></td><td><input type='text' value="+xmlDoc.getElementsByTagName("author")[a].childNodes[0].nodeValue+"></td><td><input type='text' value="+xmlDoc.getElementsByTagName("from")[a].childNodes[0].nodeValue+"></td><td><input type='text' value="+xmlDoc.getElementsByTagName("to")[a].childNodes[0].nodeValue+"></td><td><button type=button name=remove id="+a+" class=btn btn-danger btn_remove1 onclick=remove(id)>X</button></td></tr>";
+            }
+        }
+    };
+    xhttp.open("GET", "note.xml", true);
+    xhttp.send();
+}
+function remove(id)
+{
+  document.getElementById("row"+id).remove();
+}
+function add(){
+    b++;
+    document.getElementById("dynamic_field1").innerHTML+="<tr id=row"+b+"><td><input type='number'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td></td><td><button type=button name=remove id="+b+" class=btn btn-danger btn_remove1 onclick=remove(id)>X</button></td> </tr>";
+}
+
+loadXMLDoc();
 </script>  
+
+
+<table style="border:0px;">
+  <tr>
+    <td>ID</td>
+    <td>model</td>
+
+    <td>type</td>
+    <td>capacity</td>
+  </tr>
+    
+  
+
+  <tbody id="demo"></tbody>
+  <tbody id="dynamic_field1"></tbody>
+</table>
+<button type="button" name="add1" id="add1" class="btn btn-success" onclick="add()">Add More</button>
+
+</body>
+<style type="text/css">
+  table, th, td {
+  border: 0px solid black;
+}
+</style>
+
+
 </body>  
 </html>
